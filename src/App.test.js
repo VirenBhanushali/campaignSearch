@@ -141,5 +141,5 @@ test("No Campaign Fooound Screen on Date Outside Range and Go back Functionality
 });
 
 test("covering addCampaign Global Method", () => {
-  global.addCampaign();
+  addCampaign([]);
 });

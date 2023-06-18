@@ -5,8 +5,11 @@ const {
 } = require("@reduxjs/toolkit");
 
 let url = "";
-if (process.env.NODE_ENV === "development") {
-  url = "http://localhost:8000/campaigns";
+if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
+  url =
+    process.env.NODE_ENV !== "test"
+      ? "http://localhost:8000/campaigns"
+      : "http://localhost:8000/test";
 } else {
   url = "https://adform-assignment-default-rtdb.firebaseio.com/campaigns.json";
 }

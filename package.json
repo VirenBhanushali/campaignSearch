@@ -24,9 +24,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --coverage --silent --coveragePathIgnorePatterns=src/index.js",
+    "test": "react-scripts test --silent",
     "eject": "react-scripts eject",
-    "api": "json-server --watch src/db.json --port 8000"
+    "api": "json-server --watch src/db.json --port 8000",
+    "coverage": "react-scripts test --silent --coverage --watchAll --coveragePathIgnorePatterns=src/index.js --collectCoverageFrom=src/**/*.js"
   },
   "eslintConfig": {
     "extends": [
