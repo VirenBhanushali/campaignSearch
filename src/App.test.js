@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, act } from "@testing-library/react";
 import App from "./App";
 import { Provider } from "react-redux";
-import store, { getCampaigns } from "./store/capmgainStore";
+import store, { getCampaigns } from "./store/campgainStore";
 
 test("Application Render", async () => {
   store.dispatch(getCampaigns());

@@ -80,14 +80,6 @@
         "endDate": "10/2/2026",
         "Budget": 505602,
         "userId": 5
-      },
-      {
-        "id": 102,
-        "name": "Divavu",
-        "startDate": "9/19/2021",
-        "endDate": "6/9/2023",
-        "Budget": 88377,
-        "userId": 102
       }
     ]
   },

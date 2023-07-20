@@ -57,62 +57,34 @@ function App() {
   };
   function FilterTableStartDate(values) {
     let filteredTable = [];
-    //for valid Name and No Dates
-    if (values.name.length > 0 && !values.startDate && !values.endDate) {
-      let temparr = campaigns.filter((campaign) =>
-        campaign.name.toLowerCase().includes(values.name.toLowerCase())
-      );
-      filteredTable = temparr;
-    }
-    //Filtering on both Dates
-    if (values.startDate && values.endDate) {
-      const startDateTemp = new Date(values.startDate).getTime();
-      const endDateTemp = new Date(values.endDate).getTime();
-      //Condition Where EndDate is greater tha Start Date
-      if (endDateTemp < startDateTemp) {
-        toast.error("End Date should not be less than start Date");
-        dispatch(campaignSliceActions.filterTable({ campaigns: [] }));
-        return;
-      }
-      filteredTable = campaigns.filter(
-        (campaign) =>
-          new Date(campaign.startDate).getTime() >= startDateTemp &&
-          new Date(campaign.endDate).getTime() <= endDateTemp
-      );
-      //Filtering on Dates + Name
-      if (values.name.length > 0) {
-        let temparr = filteredTable.filter((campaign) =>
-          campaign.name.toLowerCase().includes(values.name.toLowerCase())
-        );
-        filteredTable = temparr;
-      }
-    } else {
-      //Filtering only on Start Date
-      if (values.startDate) {
-        const startDateTemp = new Date(values.startDate).getTime();
-        filteredTable = campaigns.filter(
-          (campaign) => new Date(campaign.startDate).getTime() >= startDateTemp
-        );
-      }
-      //Filtering Only on end Date
-      if (values.endDate) {
-        const endDateTemp = new Date(values.endDate).getTime();
-        filteredTable = campaigns.filter(
-          (campaign) => new Date(campaign.endDate).getTime() <= endDateTemp
-        );
-      }
-      //Filtering with endDate or Start Date + name
-      if (values.name.length > 0) {
-        let temparr = filteredTable.filter((campaign) =>
-          campaign.name.toLowerCase().includes(values.name.toLowerCase())
-        );
-        filteredTable = temparr;
-      }
-    }
-    //Filtering For all Reset Value to Default Home Screen
+    const startDateTemp = new Date(values.startDate).getTime();
+    const endDateTemp = new Date(values.endDate).getTime();
+
+    //Error Validation
     if (values.name.length === 0 && !values.startDate && !values.endDate) {
       filteredTable = campaigns;
+    } else if (startDateTemp > endDateTemp) {
+      toast.error("Start Date cannot be Greater than end Date");
     }
+    let tempArr;
+    //Filtering Logic
+    if (startDateTemp && endDateTemp) {
+      tempArr = campaigns.filter(
+        (campaign) =>
+          new Date(campaign.startDate).getTime() >= startDateTemp &&
+          new Date(campaign.endDate).getTime() <= endDateTemp &&
+          campaign.name.toLowerCase().includes(values.name.toLowerCase())
+      );
+    } else {
+      tempArr = campaigns.filter(
+        (campaign) =>
+          (campaign.name.toLowerCase().includes(values.name.toLowerCase()) &&
+            values.name !== "") ||
+          new Date(campaign.startDate).getTime() >= startDateTemp ||
+          new Date(campaign.endDate).getTime() <= endDateTemp
+      );
+    }
+    filteredTable = tempArr;
     //Common Dispatch
     dispatch(campaignSliceActions.filterTable({ campaigns: filteredTable }));
   }
